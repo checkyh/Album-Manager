@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="theme-color" content="#00AA8D">
+    <title>Album Manager</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Raleway:400,700">
+    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+    <link rel="import" href="recipe-app.html">
+</head>
+
+<body>
+    <template is="dom-bind">
+    <iron-ajax url="data/recipes.json" auto last-response="{{recipes}}"></iron-ajax>
+    <recipe-app recipes="[[recipes]]"></recipe-app>
+  </body>
+  </template>
+
+</html>
