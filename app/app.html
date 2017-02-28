@@ -1,23 +1,72 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <meta name="theme-color" content="#00AA8D">
-    <title>Album Manager</title>
-    <link rel="manifest" href="manifest.json">
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Raleway:400,700">
-    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
-    <link rel="import" href="recipe-app.html">
+    <meta charset="UTF-8">
+    <title>Project Showcase</title>
+    <script type="text/javascript">
+        window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');
+    </script>
+    <script src="app.js"></script>
+    <script src="vendor/electron_boilerplate/context_menu.js"></script>
+    <script src="vendor/electron_boilerplate/external_links.js"></script>
+
 </head>
 
-<body>
-    <template is="dom-bind">
-    <iron-ajax url="data/recipes.json" auto last-response="{{recipes}}"></iron-ajax>
-    <recipe-app recipes="[[recipes]]"></recipe-app>
-  </body>
-  </template>
+<body id="home">
+    <!-- Main Wrapper Starts -->
+    <div class="wrapper">
+        <!--Gallery created using jquery.mixItUp.js plugin-->
+        <div id="gallery">
+            <!--Buttons to filter the items-->
+            <nav class="nav-extended" style="background-color: #ba68c8;">
+                <div class="filter-container pin-top">
+                    <div id="tag-column" class="filter-buttons">
+                        <div class="filter" data-filter="all">All</div>
+                    </div>
+                </div>
+            </nav>
+            <!--Container of all the items-->
+            <div class="items-container">
+                <!--Items-->
+                <div id="items" class="items">
+                    <!--Item 1-->
+                    <div class="mix default" data="./images/portfolio.jpg">
+                        <!--main container for img ,description and original link-->
+                        <div class="main">
+                            <!--img associated with item-->
+                            <img src="images/portfolio.jpg" alt="">
+                            <!--Description of item-->
+                            <div class="desc">
+                                <div class="text">Title:Portfolio<br>Path:Unknown<br>Tags:default<br></div>
+                                <a class="waves-effect waves-light btn" href="#modal1">Select</a>
+                            </div>
+                        </div>
+
+                        <!--Details of item-->
+                        <div class="details">
+                            <div class="title">Porfolio</div>
+                            <div class="skills">default</div>
+                        </div>
+                    </div>
+                    <!--Item 2-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Wrapper Ends -->
+    <div id="modal1" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Action Choosing</h4>
+        </div>
+        <div class="modal-footer">
+            <a id="Create" class="btn-flat">Create Personalized Album</a>
+            <a id="MTag" class="btn-flat">Modify Tag</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
 
 </html>
