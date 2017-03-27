@@ -1,5 +1,9 @@
 import {
-    app, BrowserWindow, Menu, dialog
+    app,
+    BrowserWindow,
+    Menu,
+    dialog,
+    ipcMain
 }
 from 'electron';
 import windowStateKeeper from './vendor/electron_boilerplate/window_state';
@@ -14,10 +18,29 @@ var mainWindowState = windowStateKeeper('main', {
     height: 900
 });
 var images;
-var defaults = {
-};
+var defaults = {};
 
 var ready = false;
+const execFile = require('child_process').execFile;
+function Layout_Designer(){
+  execFile('D:/OneDrive - Landian Office 365/Graduate Implement/lightgallery-desktop/tmp/lightgallery/Lightgallery.exe', {
+      cwd: 'D:/'
+  }, function(error, stdout, stderr) {
+      if (error !== null) {
+          console.log('exec error: ' + error);
+      }
+  });
+}
+function Slide_Show(){
+  execFile('D:/OneDrive - Landian Office 365/Graduate Implement/lightgallery-desktop/tmp/lightgallery/Lightgallery.exe', {
+      cwd: 'D:/'
+  }, function(error, stdout, stderr) {
+      if (error !== null) {
+          console.log('exec error: ' + error);
+      }
+  });
+}
+
 
 var setDevMenu = function() {
     var devMenu = Menu.buildFromTemplate([{
@@ -68,6 +91,24 @@ var setDevMenu = function() {
                 }, function(directory) {
                     mainWindow.webContents.send('openDirectory', directory);
                 });
+            }
+        }]
+    }, {
+        label: 'Tool',
+        submenu: [{
+            label: 'Create Personal Album',
+            click: function() {
+                mainWindow.webContents.send('createPA');
+            }
+        }, {
+            label: 'Slide Mode',
+            click: function() {
+                Slide_Show();
+            }
+        }, {
+            label: 'Layout Designer',
+            click: function() {
+                Layout_Designer();
             }
         }]
     }, {
@@ -175,6 +216,23 @@ app.on('open-url', (event, path) => {
 
     images = arg;
 });
-app.on('createPA',(event,path)=>{
-  console.log(path);
+ipcMain.on('createPA', (event) => {
+    var presWindow = new BrowserWindow({
+        width: 649,
+        height: 602,
+        show: false,
+        frame: false
+    })
+    presWindow.loadURL('file://' + __dirname + '/create.html');
+    presWindow.show();
+});
+app.on('createPA', (event) => {
+    var presWindow = new BrowserWindow({
+        width: 649,
+        height: 602,
+        show: false,
+        frame: false
+    })
+    presWindow.loadURL('file://' + __dirname + '/create.html');
+    presWindow.show();
 });

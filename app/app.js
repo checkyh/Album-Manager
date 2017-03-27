@@ -10,26 +10,51 @@ import env from './env';
 
 var app = remote.app;
 var db = require('./query');
-var createPA = function(path){
+var createPA = function(path) {
     ipcRenderer.send('createPA', val);
 };
+var Dialogs = require('dialogs');
+var dialogs = Dialogs({});
+document.getElementByClassName
+window.$(document).on("click", "#MTag", function() {
+    dialogs.prompt('Change Tags',  function(ok) {});
+});
+window.$(document).on("click", "#selected", function() {
+    var val = window.$(this).data('tag');
+    db.writetag(val);
+});
+window.$(document).on("click", "#Create", function() {
+    ipcRenderer.send('createPA');
+})
 
-function loadjscssfile(filename, filetype) {
+function loadjscssfile(filename, filetype, callback) {
     if (filetype == "js") {
         var fileref = document.createElement('script');
         fileref.setAttribute("type", "text/javascript");
+        fileref.setAttribute("async", "text/javascript");
         fileref.setAttribute("src", filename);
-    } else if (filetype == "css") {
 
+    } else if (filetype == "css") {
         var fileref = document.createElement('link');
         fileref.setAttribute("rel", "stylesheet");
         fileref.setAttribute("type", "text/css");
         fileref.setAttribute("href", filename);
     }
+    if (callback != null) {
+        fileref.onload = fileref.onreadystatechange = function() {
+            if (fileref.ready) {
+                return false;
+            }
+            if (!fileref.readyState || fileref.readyState == "loaded" || fileref.readyState == 'complete') {
+                fileref.ready = true;
+                callback();
+            }
+        }
+    }
     if (typeof fileref != "undefined") {
         document.getElementsByTagName("head")[0].appendChild(fileref);
     }
-}
+};
 document.addEventListener('DOMContentLoaded', function() {
     db.init();
     db.tag().then(function(result) {
@@ -40,16 +65,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         db.list().then(function(result) {
             for (var i = 0; i < result.length; i++) {
-                var item = "<div class=\"mix " + result[i].tag + "\"><div class=\"main\"><img src=\"" + result[i].path + "\"><div class=\"desc\"><div class=\"text\">Title:" + result[i].name + "<br>Path:" + result[i].path + "<br>Tags:" + result[i].tag + "<br></div> <a id=\"selected\" data-path=\"" + result[i].path + "\" class=\"waves-effect waves-light btn\" href=\"#modal1\">Select</a></div></div><div class=\"details\"><div class=\"title\">" + result[i].name + "</div><div class=\"skills\">" + result[i].tag + "\"</div></div>"
+                var item = "<div class=\"mix " + result[i].tag + "\"><div class=\"main\"><img src=\"" + result[i].path + "\"><div class=\"desc\"><div class=\"text\">Title:" + result[i].name + "<br>Path:" + result[i].path + "<br>Tags:" + result[i].tag + "<br></div> <a id=\"selected\" data-tag=\"" + result[i].tag + "\" class=\"waves-effect waves-light btn\" href=\"#modal1\">Select</a></div></div><div class=\"details\"><div class=\"title\">" + result[i].name + "</div><div class=\"skills\">" + result[i].tag + "\"</div></div>"
                 document.getElementById('items').innerHTML += item;
             }
-            loadjscssfile("node_modules/jquery.mixitup.js", "js");
-            loadjscssfile("node_modules/main.js", "js");
-            loadjscssfile("node_modules/hammerjs/hammer.js", "js");
-            loadjscssfile("node_modules/materialize-css/dist/js/materialize.js", "js");
+            loadjscssfile("node_modules/hammerjs/hammer.js", "js", function() {
+                loadjscssfile("node_modules/materialize-css/dist/js/materialize.js", "js", function() {
+                    loadjscssfile("node_modules/jquery.mixitup.js", "js", function() {
+                        loadjscssfile("node_modules/main.js", "js", function() {
+                            loadjscssfile("node_modules/modals.js", "js");
+                        });
+                    });
+                });
+            });
             loadjscssfile("css/normalize.css", "css");
             loadjscssfile("node_modules/materialize-css/dist/css/materialize.css", "css");
-            loadjscssfile("node_modules/modals.js", "js");
             loadjscssfile("node_modules/material-design-icons/iconfont/material-icons.css", "css");
             loadjscssfile("css/gallery.css", "css");
             loadjscssfile("css/style.css", "css");

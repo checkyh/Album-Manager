@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script>
+        window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');
+    </script>
+    <script src="create.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="card">
+            <span class="card-title">Making your Album</span>
+            <div class="card-content">
+                <div class="input-field col s12">
+                    <select id="header" multiple>
+                      <option value="" disabled selected>Select the pictures</option>
+                    </select>
+                    <label>Choose pictures candidate</label>
+                </div>
+                <div class="carousel" data-indicators="true">
+                    <a class="carousel-item" href="#two!"><img src="./images/drop.png"></a>
+                    <a class="carousel-item" href="#one!"><img src="./images/grid.png"></a>
+                    <a class="carousel-item" href="#three!"><img src="./images/pentagon.png"></a>
+                    <a class="carousel-item" href="#four!"><img src="./images/rhombus.png"></a>
+                    <a class="carousel-item" href="#five!"><img src="./images/leaf.png"></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
