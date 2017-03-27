@@ -7,8 +7,8 @@ css+js:@materializedcss
 
 db:@nedb
 
-![](1.gif)
+![](part1.gif)
 
-![](2.gif)
+![](part2.gif)
 
-![](3.gif)
+![](part3.gif)
